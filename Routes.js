@@ -1,10 +1,10 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Route, Switch } from "react-router";
-import { NativeRouter, Link, AndroidBackButton } from "react-router-native";
+import { NativeRouter, Link } from "react-router-native";
 import { Navigation, Card } from "react-router-navigation";
 
-const Home = () => <Text style={styles.header}>Home</Text>;
+const Home = () => <Text style={styles.header}>HomeHomeHomeHomeHomeHomeHomeHomeHomeHomeHomeHomeHomeHomeHomeHomeHomeHomeHomeHomeHomeHomeHomeHomeHome</Text>;
 const About = () => <Text style={styles.header}>About</Text>;
 const Topics = () => <Text style={styles.header}>Topics</Text>;
 
@@ -17,7 +17,6 @@ const Routes = () => {
   return (
     <NativeRouter>
       <View>
-        <AndroidBackButton />
         <Navigation>
           <Card
             exact
@@ -65,4 +64,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Routes;
+export default Home;
