@@ -41,7 +41,7 @@ module.exports = {
         beforeColon: false
       }
     ],
-    // quotes: [1, "double"],
+    quotes: [0, "single"],
     "array-callback-return": 0,
     "arrow-parens": 0,
     "arrow-body-style": [2, "as-needed"],
