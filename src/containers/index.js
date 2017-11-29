@@ -1,10 +1,10 @@
 // import React from "react";
 
-import { TabNavigator, StackNavigator } from "react-navigation";
+import { TabNavigator, StackNavigator } from 'react-navigation';
 
-import Chat from "./Chat";
-import AllContract from "./AllContract";
-import RecentChat from "./RecentChat";
+import Chat from './Chat';
+import AllContract from './AllContract';
+import RecentChat from './RecentChat';
 
 const MainScreenNavigator = TabNavigator({
   Recent: { screen: RecentChat },
@@ -15,7 +15,7 @@ const SimpleApp = StackNavigator({
   Home: {
     screen: MainScreenNavigator,
     navigationOptions: {
-      title: "My Chats"
+      title: 'My Chats'
     }
   },
   Chat: { screen: Chat }

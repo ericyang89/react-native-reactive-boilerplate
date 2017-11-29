@@ -1,5 +1,5 @@
-import React from "react";
-import { Text, View, Button } from "react-native";
+import React from 'react';
+import { Text, View, Button } from 'react-native';
 
 export default class ChatScreen extends React.Component {
   // static navigationOptions = {
@@ -14,7 +14,7 @@ export default class ChatScreen extends React.Component {
       <View>
         <Text>Chat with {params.user}</Text>
         <Button
-          onPress={() => this.props.navigation.navigate("All")}
+          onPress={() => this.props.navigation.navigate('All')}
           title="go all"
         />
       </View>

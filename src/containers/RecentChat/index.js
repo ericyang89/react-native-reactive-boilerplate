@@ -1,5 +1,5 @@
-import React from "react";
-import { Text, View, Button } from "react-native";
+import React from 'react';
+import { Text, View, Button } from 'react-native';
 
 export default class RecentChatsScreen extends React.Component {
   render() {
@@ -8,7 +8,7 @@ export default class RecentChatsScreen extends React.Component {
         <Text>List of all contacts </Text>
         <Button
           onPress={() =>
-            this.props.navigation.navigate("Chat", { user: "lily" })
+            this.props.navigation.navigate('Chat', { user: 'lily' })
           }
           title="Chat with lily"
         />

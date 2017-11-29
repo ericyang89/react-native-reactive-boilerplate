@@ -1,6 +1,6 @@
 // import { combineReducers } from "redux-immutable";
-import { combineReducers } from "redux";
-import navReducer from "./navReducer";
+import { combineReducers } from 'redux';
+import navReducer from './navReducer';
 
 // 引入文件夹中的reducer
 

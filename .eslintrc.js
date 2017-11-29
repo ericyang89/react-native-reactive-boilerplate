@@ -14,6 +14,7 @@ module.exports = {
   },
   extends: ["airbnb", "prettier", "prettier/react"],
   globals: {
+    __DEV__:true
     // Set each global variable name equal to true to allow the variable to be
     // overwritten or false to disallow overwriting.
   },
@@ -41,7 +42,7 @@ module.exports = {
         beforeColon: false
       }
     ],
-    quotes: [0, "single"],
+    "quotes": [1, "single"],
     "array-callback-return": 0,
     "arrow-parens": 0,
     "arrow-body-style": [2, "as-needed"],
