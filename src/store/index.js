@@ -4,8 +4,12 @@ import {
   applyMiddleware
   // compose
 } from 'redux';
+import { createEpicMiddleware } from 'redux-observable';
 import Reactotron from './../configs/ReactotronConfig';
 import rootReducer from './rootReducer';
+import rootEpic from './rootEpic';
+
+const epicMiddleware = createEpicMiddleware(rootEpic);
 
 const currentCreateStore = __DEV__ ? Reactotron.createStore : createStore;
 
@@ -25,7 +29,7 @@ function configureStore(/* initialState = {} */) {
   const store = currentCreateStore(
     rootReducer,
     // initialState,
-    applyMiddleware(logger)
+    applyMiddleware(epicMiddleware, logger)
     // compose(applyMiddleware(
     // thunkMiddleware,
     /*  createLogger(),  */

@@ -5,6 +5,7 @@ import { TabNavigator, StackNavigator } from 'react-navigation';
 import Chat from './Chat';
 import AllContract from './AllContract';
 import RecentChat from './RecentChat';
+import PingPong from './PingPong';
 
 const MainScreenNavigator = TabNavigator({
   Recent: { screen: RecentChat },
@@ -12,6 +13,9 @@ const MainScreenNavigator = TabNavigator({
 });
 
 const SimpleApp = StackNavigator({
+  PingPong: {
+    screen: PingPong
+  },
   Home: {
     screen: MainScreenNavigator,
     navigationOptions: {
