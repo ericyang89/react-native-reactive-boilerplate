@@ -12,6 +12,14 @@ export default class AllContactsScreen extends React.Component {
           }
           title="Chat with Lucy"
         />
+        <Button
+          onPress={() => this.props.navigation.navigate('Ping')}
+          title="pingpong"
+        />
+        <Button
+          onPress={() => this.props.navigation.navigate('Counter')}
+          title="counter"
+        />
       </View>
     );
   }
