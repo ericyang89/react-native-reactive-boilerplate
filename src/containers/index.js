@@ -7,6 +7,7 @@ import AllContract from './AllContract';
 import RecentChat from './RecentChat';
 import PingPong from './PingPong';
 import Counter from './Counter';
+import KingGlory from './KingGlory';
 
 const MainScreenNavigator = TabNavigator({
   Recent: { screen: RecentChat },
@@ -14,6 +15,12 @@ const MainScreenNavigator = TabNavigator({
 });
 
 const SimpleApp = StackNavigator({
+  KingGlory: {
+    screen: KingGlory,
+    navigationOptions: {
+      title: 'KingGlory'
+    }
+  },
   Home: {
     screen: MainScreenNavigator,
     navigationOptions: {
