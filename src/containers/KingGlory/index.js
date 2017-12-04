@@ -5,8 +5,12 @@ import ScrollableTabView, {
   DefaultTabBar
 } from 'react-native-scrollable-tab-view';
 import ContentList from './ContentList';
+import { tag as requestTag } from './request';
 
 class Index extends React.Component {
+  componentDidMount() {
+    requestTag();
+  }
   render() {
     // ScrollableTabView 外面嵌套view会导致问题，后续要查一下
     return (

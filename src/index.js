@@ -1,18 +1,21 @@
 import React from 'react';
+
+// TODO: 后续只用特定的operator 以减小文件大小
 import 'rxjs';
 import { addNavigationHelpers } from 'react-navigation';
 import { connect, Provider } from 'react-redux';
 import Reactotron from './configs/ReactotronConfig';
+import './configs/axiosConfig';
 import AppNavigator from './containers';
 import store from './store';
 
+if (__DEV__) {
+  Reactotron.connect();
+  Reactotron.clear();
+}
+
 class App extends React.Component {
-  componentDidMount() {
-    if (__DEV__) {
-      Reactotron.connect();
-      Reactotron.clear();
-    }
-  }
+  componentDidMount() {}
   render() {
     return (
       <AppNavigator
