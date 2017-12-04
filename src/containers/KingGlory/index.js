@@ -4,12 +4,13 @@ import React from 'react';
 import ScrollableTabView, {
   DefaultTabBar
 } from 'react-native-scrollable-tab-view';
+import { connect } from 'react-redux';
 import ContentList from './ContentList';
-import { tag as requestTag } from './request';
+import { loadTopic } from './reducer';
 
 class Index extends React.Component {
   componentDidMount() {
-    requestTag();
+    this.props.dispatch(loadTopic());
   }
   render() {
     // ScrollableTabView 外面嵌套view会导致问题，后续要查一下
@@ -26,8 +27,10 @@ class Index extends React.Component {
   }
 }
 
-// const mapStateToProps = state => ({ number: state && state.counter.number });
+const mapStateToProps = state => ({
+  topic: state && state.get('kingGlory').get('topic')
+});
 
-// export default connect(mapStateToProps)(Ping);
+export default connect(mapStateToProps)(Index);
 
-export default Index;
+// export default Index;

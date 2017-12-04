@@ -2,6 +2,7 @@ import axios from 'axios';
 import invariant from 'invariant';
 
 axios.defaults.baseURL = 'http://yubadev.dz11.com';
+
 // Add a response interceptor
 axios.interceptors.response.use(
   response => {

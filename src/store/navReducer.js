@@ -1,17 +1,21 @@
 import { NavigationActions } from 'react-navigation';
+import { fromJS } from 'immutable';
 import AppNavigator from './../containers';
 
 const initialState = AppNavigator.router.getStateForAction(
   NavigationActions.init()
 );
+console.log(initialState);
 
 /**
  * 路由的专用reducer
  * @param {Object} state
  * @param {Object} action
  */
-const navReducer = (state = initialState, action) => {
-  const nextState = AppNavigator.router.getStateForAction(action, state);
+const navReducer = (state = fromJS(initialState), action) => {
+  const nextState = state.merge(
+    AppNavigator.router.getStateForAction(action, state.toJS())
+  );
   return nextState || state;
 };
 

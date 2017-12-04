@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, FlatList } from 'react-native';
+// import { connect } from 'react-redux';
 
 const styles = StyleSheet.create({
   view: {
@@ -9,21 +10,26 @@ const styles = StyleSheet.create({
   }
 });
 
+const getData = () =>
+  Array.from(new Array(10000)).map((item, index) => ({
+    num: index
+  }));
 class ContentList extends React.Component {
   render() {
     return (
       <View style={styles.view}>
         <FlatList
-          data={[{ key: 'a' }, { key: 'b' }, { key: 'c' }, { key: 'd' }]}
-          renderItem={({ item }) => <Text>{item.key}</Text>}
+          keyExtractor={(item, index) => `${index}111`}
+          data={getData()}
+          renderItem={({ item }) => <Text key={item.num}>{item.num}</Text>}
         />
       </View>
     );
   }
 }
 
-// const mapStateToProps = state => ({ number: state && state.counter.number });
+// const mapStateToProps = state => ({ tag: state.kingGlory.tag });
 
-// export default connect(mapStateToProps)(Ping);
+// export default connect(mapStateToProps)(ContentList);
 
 export default ContentList;

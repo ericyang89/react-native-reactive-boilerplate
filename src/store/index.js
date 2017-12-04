@@ -4,6 +4,7 @@ import {
   applyMiddleware
   // compose
 } from 'redux';
+import Immutable from 'immutable';
 import { createEpicMiddleware } from 'redux-observable';
 import Reactotron from './../configs/ReactotronConfig';
 import rootReducer from './rootReducer';
@@ -28,6 +29,7 @@ function logger() {
 function configureStore(/* initialState = {} */) {
   const store = currentCreateStore(
     rootReducer,
+    Immutable.Map(),
     // initialState,
     applyMiddleware(epicMiddleware, logger)
     // compose(applyMiddleware(
