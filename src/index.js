@@ -28,17 +28,9 @@ class App extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  console.log(555, state.get('nav').toJS());
-  return {
-    nav: state.get('nav').toJS()
-  };
-};
-// const mapDispatchToProps = (dispatch) => {
-//   return bindActionCreators({
-//     startApp: StartAppActions.startApp
-//   }, dispatch);
-// };
+const mapStateToProps = state => ({
+  nav: state.get('nav').toJS()
+});
 
 const AppWithNavigationState = connect(mapStateToProps)(App);
 

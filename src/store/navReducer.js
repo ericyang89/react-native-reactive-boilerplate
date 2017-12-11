@@ -5,7 +5,6 @@ import AppNavigator from './../containers';
 const initialState = AppNavigator.router.getStateForAction(
   NavigationActions.init()
 );
-console.log(initialState);
 
 /**
  * 路由的专用reducer

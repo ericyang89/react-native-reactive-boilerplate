@@ -7,7 +7,6 @@ import counter from './../containers/Counter/reducer';
 import kingGlory from './../containers/KingGlory/reducer';
 
 // 引入文件夹中的reducer
-console.log(333, combineReducers);
 
 const rootReducer = combineReducers({
   nav: navReducer,

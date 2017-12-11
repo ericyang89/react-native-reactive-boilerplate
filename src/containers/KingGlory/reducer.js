@@ -29,10 +29,6 @@ export function loadPostSuccess(d) {
   };
 }
 
-export function loadPostError(error) {
-  return { type: LOAD_POST_ERROR, error };
-}
-
 export function loadTopic() {
   return { type: LOAD_TOPIC };
 }
@@ -41,24 +37,17 @@ export function loadTopicSuccess(d) {
   return { type: LOAD_TOPIC_SUCCESS, data: d };
 }
 
-export function loadTopicError(error) {
-  return { type: LOAD_TOPIC_ERROR, error };
-}
-
 export function addPost(param) {
   return { type: ADD_POST, param };
 }
 
-export function addPostSuccess(data) {
+export function addPostSuccess(d) {
   return {
     type: ADD_POST_SUCCESS,
-    ...data
+    ...d
   };
 }
 
-export function addPostError(error) {
-  return { type: ADD_POST_ERROR, error };
-}
 export function postLoaded() {
   return { type: POST_LOADED };
 }
@@ -80,9 +69,12 @@ function kingGloryReducer(state = initialState, action) {
       return state.set('error', false);
     case LOAD_TOPIC_SUCCESS: {
       {
-        console.tron.log(action);
-        const topic = action.data.map(item =>
-          Object.assign(item, { post: [] })
+        const topics = action.data;
+
+        // 添加 默认tab
+        topics.unshift({ id: 0, name: '最新' });
+        const topic = topics.map(item =>
+          Object.assign(item, { post: [], loading: false })
         );
         return state.set('error', false).set('topic', fromJS(topic));
       }
@@ -111,12 +103,15 @@ function kingGloryReducer(state = initialState, action) {
         .set('loading', true)
         .setIn(['addPostParam', 'id'], action.param.id)
         .setIn(['addPostParam', 'lastId'], action.param.lastId);
-    case ADD_POST_SUCCESS:
-      return state;
-    // .set('loading', false)
-    // .update('topic', list =>
-    // list.update(list.findIndex(x => x.get('id') === action.id),
-    //  topic => topic.update('post', post => fromJS(post.toJS().concat(action.post))))));
+    case ADD_POST_SUCCESS: {
+      return state
+        .set('loading', false)
+        .update('topic', list =>
+          list.update(list.findIndex(x => x.get('id') === action.id), topic =>
+            topic.update('post', post => post.concat(fromJS(action.post)))
+          )
+        );
+    }
     case ADD_POST_ERROR:
       return state.set('loading', false).set('error', false);
     case POST_LOADED: {
