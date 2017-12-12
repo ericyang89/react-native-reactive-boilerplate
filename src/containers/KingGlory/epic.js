@@ -1,3 +1,4 @@
+// import Rx from 'rxjs';
 import {
   // LOAD_POST,
   // LOAD_POST_SUCCESS,
@@ -29,19 +30,40 @@ const loadFirstPostEpic = action$ =>
     .switchMap(requestPost)
     .map(data => loadPostSuccess({ id: 0, post: data }));
 
-const addPostEpic = action$ =>
-  action$
+const addPostEpic = (action$, store) => {
+  const param$ = action$
     .ofType(ADD_POST)
-    .map(x => x.param)
-    .switchMap(data => requestPost(data.id, data.lastId))
-    .map(data => addPostSuccess({ id: 0, post: data }));
+    .debounceTime(200)
+    .filter(() => {
+      const storage = store.getState().get('kingGlory');
+      const id = storage.get('currentId');
+      const hasMore = storage.getIn(['topic', id, 'hasMore'], false);
+      return hasMore;
+    })
+    .map(x => x.param);
+  const request = param =>
+    requestPost(param.id, param.lastId).then(data => ({ param, data }));
 
-const loadPostEpic = action$ =>
-  action$
-    .ofType(LOAD_POST)
-    .map(x => x.param)
-    .switchMap(data => requestPost(data.id, data.lastId))
-    .map(data => loadPostSuccess({ id: 0, post: data }));
+  const result = param$
+    .mergeMap(request)
+    .map(data => addPostSuccess({ id: data.param.id, post: data.data }));
+
+  return result;
+};
+
+const loadPostEpic = action$ => {
+  // console.log(store);
+  const param$ = action$.ofType(LOAD_POST).map(x => x.param);
+  const request = param =>
+    requestPost(param.id, param.lastId).then(data => ({ param, data }));
+
+  const result = param$
+    .mergeMap(request)
+    .map(data => loadPostSuccess({ id: data.param.id, post: data.data }));
+
+  return result;
+};
+
 const result = [loadTopicEpic, loadFirstPostEpic, addPostEpic, loadPostEpic];
 
 export default result;

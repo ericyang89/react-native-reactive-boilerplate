@@ -13,7 +13,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'blue'
   }
 });
-const pageSize = 20;
 
 class ContentList extends PureComponent {
   onRefreshHandle = () => {
@@ -22,8 +21,7 @@ class ContentList extends PureComponent {
   onLoadHandle = () => {
     const list = this.props.postList;
     const lastPost = list.get(-1);
-    if (list.size > 0 && list.size % pageSize === 0)
-      this.props.onLoad(this.props.id, lastPost && lastPost.get('id'));
+    this.props.onLoad(this.props.id, lastPost && lastPost.get('id'));
   };
   render() {
     const { postList } = this.props || {};
@@ -35,7 +33,9 @@ class ContentList extends PureComponent {
           onEndReachedThreshold={50}
           onEndReached={this.onLoadHandle}
           immutableData={postList}
-          keyExtractor={item => `${item.get('pid')}-${item.get('id')}`}
+          keyExtractor={(item, index) =>
+            `${item.get('pid')}-${item.get('id')}-${index}`
+          }
           renderItem={({ item }) => <ListItem postMap={item} />}
         />
       </View>

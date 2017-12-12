@@ -6,6 +6,7 @@
 
 import { fromJS } from 'immutable';
 import {
+  pageSize,
   LOAD_POST,
   LOAD_POST_SUCCESS,
   LOAD_POST_ERROR,
@@ -56,6 +57,7 @@ const initialState = fromJS({
   loading: false,
   error: false,
   topic: null,
+  currentId: 0,
   addPostParam: {
     id: 0,
     lastId: '',
@@ -74,7 +76,7 @@ function kingGloryReducer(state = initialState, action) {
         // 添加 默认tab
         topics.unshift({ id: 0, name: '最新' });
         const topic = topics.map(item =>
-          Object.assign(item, { post: [], loading: false })
+          Object.assign(item, { post: [], loading: false, hasMore: true })
         );
         return state.set('error', false).set('topic', fromJS(topic));
       }
@@ -87,13 +89,14 @@ function kingGloryReducer(state = initialState, action) {
         .setIn(['addPostParam', 'id'], action.param.id)
         .setIn(['addPostParam', 'lastId'], action.param.lastId);
     case LOAD_POST_SUCCESS:
-      return state
-        .set('loading', false)
-        .update('topic', list =>
-          list.update(list.findIndex(x => x.get('id') === action.id), topic =>
-            topic.update('post', () => fromJS(action.post))
-          )
-        );
+      return state.set('loading', false).update('topic', list =>
+        list.update(list.findIndex(x => x.get('id') === action.id), topic =>
+          topic
+            .update('post', () => fromJS(action.post))
+            .update('hasMore', () => action.post.length === pageSize)
+            .update('loading', () => false)
+        )
+      );
 
     case LOAD_POST_ERROR:
       return state.set('error', action.error).set('loading', false);
@@ -104,13 +107,14 @@ function kingGloryReducer(state = initialState, action) {
         .setIn(['addPostParam', 'id'], action.param.id)
         .setIn(['addPostParam', 'lastId'], action.param.lastId);
     case ADD_POST_SUCCESS: {
-      return state
-        .set('loading', false)
-        .update('topic', list =>
-          list.update(list.findIndex(x => x.get('id') === action.id), topic =>
-            topic.update('post', post => post.concat(fromJS(action.post)))
-          )
-        );
+      return state.set('loading', false).update('topic', list =>
+        list.update(list.findIndex(x => x.get('id') === action.id), topic =>
+          topic
+            .update('post', post => post.concat(fromJS(action.post)))
+            .update('hasMore', () => action.post.length === pageSize)
+            .update('loading', () => false)
+        )
+      );
     }
     case ADD_POST_ERROR:
       return state.set('loading', false).set('error', false);
