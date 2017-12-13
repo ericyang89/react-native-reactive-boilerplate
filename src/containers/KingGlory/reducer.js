@@ -16,7 +16,8 @@ import {
   ADD_POST,
   ADD_POST_SUCCESS,
   ADD_POST_ERROR,
-  POST_LOADED
+  POST_LOADED,
+  CHANGE_TAB
 } from './const';
 
 export function loadPost(param) {
@@ -27,6 +28,17 @@ export function loadPostSuccess(d) {
   return {
     type: LOAD_POST_SUCCESS,
     ...d
+  };
+}
+
+/**
+ *
+ * @param {number} tabIndex 当前的tabView的index，从0开始
+ */
+export function changeTab(tabIndex) {
+  return {
+    type: CHANGE_TAB,
+    tabIndex
   };
 }
 
@@ -57,18 +69,20 @@ const initialState = fromJS({
   loading: false,
   error: false,
   topic: null,
-  currentId: 0,
-  addPostParam: {
-    id: 0,
-    lastId: '',
-    hasMore: true
-  }
+  // 当前tabView对应的tag的id，
+  currentId: 0
 });
 
 function kingGloryReducer(state = initialState, action) {
   switch (action.type) {
     case LOAD_TOPIC:
       return state.set('error', false);
+    case CHANGE_TAB: {
+      return state.set(
+        'currentId',
+        state.getIn(['topic', action.tabIndex, 'id'], 0)
+      );
+    }
     case LOAD_TOPIC_SUCCESS: {
       {
         const topics = action.data;
@@ -84,10 +98,7 @@ function kingGloryReducer(state = initialState, action) {
     case LOAD_TOPIC_ERROR:
       return state.set('error', action.error);
     case LOAD_POST:
-      return state
-        .set('loading', true)
-        .setIn(['addPostParam', 'id'], action.param.id)
-        .setIn(['addPostParam', 'lastId'], action.param.lastId);
+      return state.set('loading', true);
     case LOAD_POST_SUCCESS:
       return state.set('loading', false).update('topic', list =>
         list.update(list.findIndex(x => x.get('id') === action.id), topic =>
@@ -102,10 +113,7 @@ function kingGloryReducer(state = initialState, action) {
       return state.set('error', action.error).set('loading', false);
 
     case ADD_POST:
-      return state
-        .set('loading', true)
-        .setIn(['addPostParam', 'id'], action.param.id)
-        .setIn(['addPostParam', 'lastId'], action.param.lastId);
+      return state.set('loading', true);
     case ADD_POST_SUCCESS: {
       return state.set('loading', false).update('topic', list =>
         list.update(list.findIndex(x => x.get('id') === action.id), topic =>
@@ -118,14 +126,7 @@ function kingGloryReducer(state = initialState, action) {
     }
     case ADD_POST_ERROR:
       return state.set('loading', false).set('error', false);
-    case POST_LOADED: {
-      const currentId = state.getIn(['addPostParam', 'id']);
-      return state.update('topic', list =>
-        list.update(list.findIndex(x => x.get('id') === currentId), topic =>
-          topic.update('hasMore', () => false)
-        )
-      );
-    }
+
     default:
       return state;
   }

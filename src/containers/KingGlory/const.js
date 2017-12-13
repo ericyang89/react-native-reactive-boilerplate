@@ -14,4 +14,5 @@ export const ADD_POST = 'app/KingGlory/ADD_POST';
 export const ADD_POST_SUCCESS = 'app/KingGlory/ADD_POST_SUCCESS';
 export const ADD_POST_ERROR = 'app/KingGlory/ADD_POST_ERROR';
 export const POST_LOADED = 'app/KingGlory/POST_LOADED';
+export const CHANGE_TAB = 'app/KingGlory/CHANGE_TAB';
 export const pageSize = 20;

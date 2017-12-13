@@ -4,7 +4,7 @@ import ScrollableTabView, {
 } from 'react-native-scrollable-tab-view';
 import { connect } from 'react-redux';
 import ContentList from './../../components/KingGlory/ContentList';
-import { loadTopic, loadPost, addPost } from './reducer';
+import { loadTopic, loadPost, addPost, changeTab } from './reducer';
 import EmptyPage from './../../components/EmptyPage';
 
 class Index extends React.PureComponent {
@@ -30,6 +30,9 @@ class Index extends React.PureComponent {
       <ScrollableTabView
         style={{ flex: 1 }}
         renderTabBar={() => <DefaultTabBar />}
+        onChangeTab={obj => {
+          this.props.dispatch(changeTab(obj.i));
+        }}
       >
         {tag.map(item => (
           // <Text>12</Text>

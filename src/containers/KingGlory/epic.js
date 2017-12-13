@@ -1,4 +1,5 @@
 // import Rx from 'rxjs';
+import { List, Map } from 'immutable';
 import {
   // LOAD_POST,
   // LOAD_POST_SUCCESS,
@@ -7,12 +8,13 @@ import {
   LOAD_TOPIC_SUCCESS,
   // LOAD_TOPIC_ERROR,
   ADD_POST,
-  LOAD_POST
+  LOAD_POST,
+  CHANGE_TAB
   // ADD_POST_SUCCESS,
   // ADD_POST_ERROR,
   // POST_LOADED
 } from './const';
-import { loadPostSuccess, addPostSuccess } from './reducer';
+import { loadPostSuccess, addPostSuccess, loadPost } from './reducer';
 
 import { tag as requestTag, post as requestPost } from './request';
 
@@ -36,9 +38,14 @@ const addPostEpic = (action$, store) => {
     .debounceTime(200)
     .filter(() => {
       const storage = store.getState().get('kingGlory');
+      const topic = storage.get('topic', new List());
       const id = storage.get('currentId');
-      const hasMore = storage.getIn(['topic', id, 'hasMore'], false);
-      return hasMore;
+      if (topic.size > 0) {
+        const hasMore = topic
+          .find(x => x.get('id') === id, Map())
+          .get('hasMore', false);
+        return hasMore;
+      }
     })
     .map(x => x.param);
   const request = param =>
@@ -63,7 +70,23 @@ const loadPostEpic = action$ => {
 
   return result;
 };
+const changeTabEpic = (action$, store) =>
+  action$
+    .ofType(CHANGE_TAB)
+    .map(action => {
+      const index = action.tabIndex;
+      const storage = store.getState().get('kingGlory');
+      const id = storage.getIn(['topic', index, 'id'], 0);
+      return id;
+    })
+    .map(id => loadPost({ id }));
 
-const result = [loadTopicEpic, loadFirstPostEpic, addPostEpic, loadPostEpic];
+const result = [
+  loadTopicEpic,
+  loadFirstPostEpic,
+  addPostEpic,
+  loadPostEpic,
+  changeTabEpic
+];
 
 export default result;
