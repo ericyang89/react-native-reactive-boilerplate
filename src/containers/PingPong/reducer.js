@@ -1,12 +1,13 @@
+import { fromJS } from 'immutable';
 import { PING, PONG } from './const';
 
-const pingReducer = (state = { isPinging: false }, action) => {
+const pingReducer = (state = fromJS({ isPinging: false }), action) => {
   switch (action.type) {
     case PING:
-      return { isPinging: true };
+      return fromJS({ isPinging: true });
 
     case PONG:
-      return { isPinging: false };
+      return fromJS({ isPinging: false });
 
     default:
       return state;

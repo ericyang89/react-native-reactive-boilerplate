@@ -1,26 +1,24 @@
 // import Rx from 'rxjs';
 import { List, Map } from 'immutable';
 import {
-  // LOAD_POST,
-  // LOAD_POST_SUCCESS,
-  // LOAD_POST_ERROR,
   LOAD_TOPIC,
   LOAD_TOPIC_SUCCESS,
-  // LOAD_TOPIC_ERROR,
   ADD_POST,
   LOAD_POST,
   CHANGE_TAB
-  // ADD_POST_SUCCESS,
-  // ADD_POST_ERROR,
-  // POST_LOADED
 } from './const';
 import { loadPostSuccess, addPostSuccess, loadPost } from './reducer';
 
 import { tag as requestTag, post as requestPost } from './request';
 
-const loadTopicEpic = action$ =>
+const loadTopicEpic = (action$, store) =>
   action$
     .ofType(LOAD_TOPIC)
+    .filter(() => {
+      const topic = store.getState().getIn(['kingGlory', 'topic'], new List());
+      const willRequest = topic.size === 0;
+      return willRequest;
+    })
     .switchMap(requestTag)
     .map(data => ({ type: LOAD_TOPIC_SUCCESS, data }));
 
@@ -28,9 +26,7 @@ const loadTopicEpic = action$ =>
 const loadFirstPostEpic = action$ =>
   action$
     .ofType(LOAD_TOPIC_SUCCESS)
-    .map(x => x.data[0])
-    .switchMap(requestPost)
-    .map(data => loadPostSuccess({ id: 0, post: data }));
+    .mapTo({ type: LOAD_POST, param: { id: 0 } });
 
 const addPostEpic = (action$, store) => {
   const param$ = action$

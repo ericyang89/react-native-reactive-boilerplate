@@ -15,12 +15,6 @@ const MainScreenNavigator = TabNavigator({
 });
 
 const SimpleApp = StackNavigator({
-  KingGlory: {
-    screen: KingGlory,
-    navigationOptions: {
-      title: 'KingGlory'
-    }
-  },
   Home: {
     screen: MainScreenNavigator,
     navigationOptions: {
@@ -32,6 +26,12 @@ const SimpleApp = StackNavigator({
   },
   Ping: {
     screen: PingPong
+  },
+  KingGlory: {
+    screen: KingGlory,
+    navigationOptions: {
+      title: 'KingGlory'
+    }
   },
   Chat: { screen: Chat }
 });

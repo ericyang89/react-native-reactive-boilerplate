@@ -1,18 +1,17 @@
 // import Reactotron from "reactotron-react-native";
-import {
-  createStore,
-  applyMiddleware
-  // compose
-} from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import Immutable from 'immutable';
 import { createEpicMiddleware } from 'redux-observable';
+
+import { persistStore, autoRehydrate } from 'redux-persist-immutable';
 import Reactotron from './../configs/ReactotronConfig';
+import persistConfig from './../configs/persistConfig';
 import rootReducer from './rootReducer';
 import rootEpic from './rootEpic';
 
 const epicMiddleware = createEpicMiddleware(rootEpic);
-
-const currentCreateStore = __DEV__ ? Reactotron.createStore : createStore;
+// const persistCombinedReducers = persistReducer(persistConfig, rootReducer);
+const wrappedCreateStore = __DEV__ ? Reactotron.createStore : createStore;
 
 function logger() {
   return next => action => {
@@ -27,21 +26,18 @@ function logger() {
 }
 
 function configureStore(/* initialState = {} */) {
-  const store = currentCreateStore(
+  const store = wrappedCreateStore(
     rootReducer,
     Immutable.Map(),
-    // initialState,
-    applyMiddleware(epicMiddleware, logger)
-    // compose(applyMiddleware(
-    // thunkMiddleware,
-    /*  createLogger(),  */
-    // middleware
-    // )
+    compose(applyMiddleware(epicMiddleware, logger), autoRehydrate())
   );
-  return store;
+  const persistor = persistStore(store, persistConfig);
+  return { store, persistor };
 }
 
-const store = configureStore();
+const { store, persistor } = configureStore();
+store.persistor = persistor;
+const { dispatch, getState } = store;
 
 export default store;
-export const { dispatch, getState } = store;
+export { dispatch, getState, persistor };

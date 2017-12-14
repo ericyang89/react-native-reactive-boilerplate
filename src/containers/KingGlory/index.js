@@ -3,6 +3,7 @@ import ScrollableTabView, {
   DefaultTabBar
 } from 'react-native-scrollable-tab-view';
 import { connect } from 'react-redux';
+import { List } from 'immutable';
 import ContentList from './../../components/KingGlory/ContentList';
 import { loadTopic, loadPost, addPost, changeTab } from './reducer';
 import EmptyPage from './../../components/EmptyPage';
@@ -19,9 +20,13 @@ class Index extends React.PureComponent {
     const param = { id: tag, lastId };
     this.props.dispatch(addPost(param));
   };
+  onChangeTabHandle = param => {
+    const tabIndex = param.i;
+    this.props.dispatch(changeTab(tabIndex));
+  };
   render() {
     const tag = this.props.topic;
-    if (!tag || tag.size < 1) {
+    if (tag.size < 1) {
       return <EmptyPage />;
     }
 
@@ -30,12 +35,9 @@ class Index extends React.PureComponent {
       <ScrollableTabView
         style={{ flex: 1 }}
         renderTabBar={() => <DefaultTabBar />}
-        onChangeTab={obj => {
-          this.props.dispatch(changeTab(obj.i));
-        }}
+        onChangeTab={this.onChangeTabHandle}
       >
         {tag.map(item => (
-          // <Text>12</Text>
           <ContentList
             key={item.get('id')}
             id={item.get('id')}
@@ -51,7 +53,7 @@ class Index extends React.PureComponent {
 }
 
 const mapStateToProps = state => ({
-  topic: state && state.get && state.get('kingGlory').get('topic')
+  topic: (state && state.getIn(['kingGlory', 'topic'], List())) || List()
 });
 
 export default connect(mapStateToProps)(Index);

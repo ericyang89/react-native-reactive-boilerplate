@@ -2,12 +2,15 @@ import React from 'react';
 
 // TODO: 后续只用特定的operator 以减小文件大小
 import 'rxjs';
+
 import { addNavigationHelpers } from 'react-navigation';
 import { connect, Provider } from 'react-redux';
+// import { PersistGate } from 'redux-persist/es/integration/react';
 import Reactotron from './configs/ReactotronConfig';
 import './configs/axiosConfig';
 import AppNavigator from './containers';
 import store from './store';
+// import Loading from './components/Loading';
 
 if (__DEV__) {
   Reactotron.connect();
@@ -36,12 +39,12 @@ const AppWithNavigationState = connect(mapStateToProps)(App);
 
 /* eslint-disable  */
 export default class Root extends React.Component {
-	render() {
-		return (
-			<Provider store={store}>
-				<AppWithNavigationState />
-			</Provider>
-		);
-	}
+  render() {
+    return (
+      <Provider store={store}>
+        <AppWithNavigationState />
+      </Provider>
+    );
+  }
 }
 /* eslint-enable  */

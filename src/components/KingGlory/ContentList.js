@@ -9,8 +9,13 @@ import ListItem from './ListItem';
 const styles = StyleSheet.create({
   view: {
     flex: 1,
-    height: 50,
-    backgroundColor: 'blue'
+    backgroundColor: '#fff'
+  },
+  separator: {
+    height: 1,
+    backgroundColor: '#eee',
+    marginTop: 2,
+    marginBottom: 2
   }
 });
 
@@ -36,6 +41,7 @@ class ContentList extends PureComponent {
           keyExtractor={(item, index) =>
             `${item.get('pid')}-${item.get('id')}-${index}`
           }
+          ItemSeparatorComponent={() => <View style={styles.separator} />}
           renderItem={({ item }) => <ListItem postMap={item} />}
         />
       </View>

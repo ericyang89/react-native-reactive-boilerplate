@@ -20,6 +20,10 @@ export default class AllContactsScreen extends React.Component {
           onPress={() => this.props.navigation.navigate('Counter')}
           title="counter"
         />
+        <Button
+          onPress={() => this.props.navigation.navigate('KingGlory')}
+          title="网站荣耀"
+        />
       </View>
     );
   }

@@ -68,7 +68,7 @@ export function postLoaded() {
 const initialState = fromJS({
   loading: false,
   error: false,
-  topic: null,
+  topic: [],
   // 当前tabView对应的tag的id，
   currentId: 0
 });

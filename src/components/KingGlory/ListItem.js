@@ -8,13 +8,26 @@ import ItemFooter from './ItemFooter';
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
-    flexDirection: 'row',
-    backgroundColor: 'blue'
+    flexDirection: 'column',
+    flexWrap: 'wrap',
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingTop: 5
   },
   title: {
-    fontSize: 16
+    flex: 1,
+    flexDirection: 'column',
+    flexWrap: 'wrap',
+    fontSize: 16,
+    color: '#333'
   },
-  content: { fontSize: 14 },
+  content: {
+    flex: 1,
+    flexDirection: 'column',
+    flexWrap: 'wrap',
+    fontSize: 14,
+    color: '#999'
+  },
   imgList: {}
 });
 
@@ -35,18 +48,20 @@ const styles = StyleSheet.create({
 class ListItem extends PureComponent {
   render() {
     const post = this.props.postMap || {};
-    // console.tron.log(post);
-    // return (
-    //   <View>
-    //     <Text>12</Text>
-    //   </View>
-    // );
     return (
       <View style={styles.wrapper}>
-        <Text style={styles.title}>{post.get('title')}</Text>
-        <Text style={styles.content}>{post.get('content')}</Text>
-        <ImgList />
-        <ItemFooter />
+        <Text style={styles.title}>12312312312312313{post.get('title')}</Text>
+        <Text style={styles.content}>
+          噶的太过分士大夫撒旦法撒打发第三方大是ad发大水发安抚{post.get(
+            'content'
+          )}
+        </Text>
+        <ImgList imgList={post.get('images')} />
+        <ItemFooter
+          userName={post.get('poster')}
+          time={post.get('time_format')}
+          replyCount={post.get('replyCount')}
+        />
       </View>
     );
   }

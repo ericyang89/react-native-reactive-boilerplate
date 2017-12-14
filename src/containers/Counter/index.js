@@ -17,7 +17,9 @@ class Ping extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({ number: state && state.counter.number });
+const mapStateToProps = state => ({
+  number: (state && state.getIn(['counter', 'number'], 0)) || 0
+});
 
 export default connect(mapStateToProps)(Ping);
 

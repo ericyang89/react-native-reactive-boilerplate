@@ -48,6 +48,7 @@
 		"react-native": "^0.46.1",
 		"react-native-immutable-list-view": "^0.6.2",
 		"react-native-scrollable-tab-view": "^0.8.0",
+		"react-native-svg": "5.3.0",
 		"react-native-tab-view": "^0.0.69",
 		"react-native-vector-icons": "^4.4.2",
 		"react-navigation": "^1.0.0-beta.21",
@@ -55,6 +56,9 @@
 		"redux": "^3.7.2",
 		"redux-immutable": "^4.0.0",
 		"redux-observable": "^0.17.0",
+		"redux-persist": "^4.0.0",
+		"redux-persist-immutable": "^4.3.1",
+		"redux-persist-transform-immutable": "^4.1.0",
 		"rxjs": "^5.5.2"
 	}
 }

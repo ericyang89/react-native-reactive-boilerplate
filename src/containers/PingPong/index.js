@@ -20,7 +20,9 @@ class Ping extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({ isPinging: state && state.ping.isPinging });
+const mapStateToProps = state => ({
+  isPinging: (state && state.getIn(['ping', 'isPinging'], false)) || false
+});
 
 export default connect(mapStateToProps)(Ping);
 
