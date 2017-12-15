@@ -1,8 +1,8 @@
 import axios from 'axios';
 import invariant from 'invariant';
 
-// axios.defaults.baseURL = 'http://yubadev.dz11.com';
-axios.defaults.baseURL = 'http://yuba.douyu.com';
+axios.defaults.baseURL = 'http://yubadev.dz11.com';
+// axios.defaults.baseURL = 'http://yuba.douyu.com';
 
 // Add a response interceptor
 axios.interceptors.response.use(

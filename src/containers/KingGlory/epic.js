@@ -37,9 +37,8 @@ const addPostEpic = (action$, store) => {
       const topic = storage.get('topic', new List());
       const id = storage.get('currentId');
       if (topic.size > 0) {
-        const hasMore = topic
-          .find(x => x.get('id') === id, Map())
-          .get('hasMore', false);
+        const currentTopic = topic.find(x => x.get('id') === id, Map());
+        const hasMore = currentTopic.get('hasMore', false);
         return hasMore;
       }
     })
