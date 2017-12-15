@@ -5,13 +5,9 @@ import { createEpicMiddleware } from 'redux-observable';
 
 import { persistStore, autoRehydrate } from 'redux-persist-immutable';
 import Reactotron from './../configs/ReactotronConfig';
-import persistConfig from './../configs/persistConfig';
+import persistConfig, { usePersist } from './../configs/persistConfig';
 import rootReducer from './rootReducer';
 import rootEpic from './rootEpic';
-
-const epicMiddleware = createEpicMiddleware(rootEpic);
-// const persistCombinedReducers = persistReducer(persistConfig, rootReducer);
-const wrappedCreateStore = __DEV__ ? Reactotron.createStore : createStore;
 
 function logger() {
   return next => action => {
@@ -25,13 +21,21 @@ function logger() {
   };
 }
 
+const epicMiddleware = createEpicMiddleware(rootEpic);
+const enhancer = usePersist
+  ? compose(applyMiddleware(epicMiddleware, logger), autoRehydrate())
+  : applyMiddleware(epicMiddleware, logger);
+// const persistCombinedReducers = persistReducer(persistConfig, rootReducer);
+const wrappedCreateStore = __DEV__ ? Reactotron.createStore : createStore;
+
 function configureStore(/* initialState = {} */) {
-  const store = wrappedCreateStore(
-    rootReducer,
-    Immutable.Map(),
-    compose(applyMiddleware(epicMiddleware, logger), autoRehydrate())
-  );
-  const persistor = persistStore(store, persistConfig);
+  const store = wrappedCreateStore(rootReducer, Immutable.Map(), enhancer);
+  let persistor;
+  if (usePersist) {
+    persistor = persistStore(store, persistConfig);
+  } else {
+    persistor = {};
+  }
   return { store, persistor };
 }
 

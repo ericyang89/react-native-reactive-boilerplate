@@ -1,4 +1,25 @@
-参考
+# react native boilerplate
+
+A react-native boilerplate. Build with react-navigation, redux, immutable, rxjs.
+performance, best developer experience and easy easy to extend.
+
+## 集成
+
+* "react-navigation"
+* "redux"
+* "immutable": "^3.8.2",
+* "rxjs": "^5.5.2"
+* "redux-observable": "^0.17.0",
+* "redux-persist": "^4.0.0",
+* "axios": "^0.17.1",
+* "expo": "^19.0.0",
+
+## demo
+
+[expo demo](https://github.com/ericyang89/image/blob/master/img-for-react-native-reactive-boilerplate/expoQr.jpg)
+
+exp://h2-xux.ericyang89.yuba-rn-new.exp.direct:80
+
 [react native 官网](http://facebook.github.io/react-native/docs/getting-started.html#content)
 
 ## 配置

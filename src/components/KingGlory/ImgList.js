@@ -44,7 +44,7 @@ const Index = ({ imgList = List() }) => {
       </View>
     );
   }
-  const imgCount = imgList.size;
+  // const imgCount = imgList.size;
   const showImgList = imgList.take(3);
   return (
     <View style={styles.wrapper}>
