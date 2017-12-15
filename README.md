@@ -5,8 +5,8 @@ performance, best developer experience and easy easy to extend.
 
 ## 集成
 
-* "react-navigation"
-* "redux"
+* "react-navigation": "^1.0.0-beta.21",
+* "redux": "^3.7.2",
 * "immutable": "^3.8.2",
 * "rxjs": "^5.5.2"
 * "redux-observable": "^0.17.0",
@@ -15,6 +15,13 @@ performance, best developer experience and easy easy to extend.
 * "expo": "^19.0.0",
 
 ## demo
+
+## pic
+
+![homepage](https://github.com/ericyang89/image/blob/master/img-for-react-native-reactive-boilerplate/homepage.png)
+![king](https://github.com/ericyang89/image/blob/master/img-for-react-native-reactive-boilerplate/king.png)
+
+### use expo app view
 
 ![expo demo](https://github.com/ericyang89/image/blob/master/img-for-react-native-reactive-boilerplate/expoQr.jpg)
 
