@@ -16,7 +16,7 @@ performance, best developer experience and easy easy to extend.
 
 ## demo
 
-[expo demo](https://github.com/ericyang89/image/blob/master/img-for-react-native-reactive-boilerplate/expoQr.jpg)
+![expo demo](https://github.com/ericyang89/image/blob/master/img-for-react-native-reactive-boilerplate/expoQr.jpg)
 
 exp://h2-xux.ericyang89.yuba-rn-new.exp.direct:80
 
